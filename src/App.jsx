@@ -1,34 +1,96 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Card } from './components/Card'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [lists, setList] = useState(
+    [
+      {
+        id: 0,
+        owner: 'Lily',
+        tasks: 
+        ['Task 0', 'Task 1']
+      },
+      {
+        id: 1,
+        owner: 'Mike',
+        tasks: 
+        ['Task 2', 'Task 3']
+      },
+      {
+        id: 2,
+        owner: 'Sofia',
+        tasks: 
+        ['Task 4', 'Task 5', 'Task 6', 'Task 7']
+      },
+      {
+        id: 3,
+        owner: 'Joe',
+        tasks: 
+        ['Task 8', 'Task 9']
+      },
+    ]
+  )
+
+  const addTask = (cardIndex, newTask) => {
+    setList((list) => {
+      const updatedList = [...list];
+
+      updatedList[cardIndex] = {
+        ...updatedList[cardIndex],
+        tasks: [...updatedList[cardIndex].tasks, newTask]
+      }
+
+      return updatedList;
+    })
+  }
+
+  const taskUpdate = (taskIndex, cardIndex, action) => {
+    setList((list) => {
+      const updatedList = [...list];
+
+      const currentList = updatedList[cardIndex];
+
+      const targetedList = action === 'next' ? cardIndex + 1 : cardIndex - 1;
+
+      if (targetedList >= 0 && targetedList <= updatedList.length &&
+        taskIndex >= 0 && taskIndex <= currentList.tasks.length){
+
+          const currentTask = currentList.tasks[taskIndex];
+
+          const currentListTasks = [...currentList.tasks];
+
+          currentListTasks.splice(taskIndex, 1);
+
+          const targetedListTasks = [...updatedList[targetedList].tasks];
+
+          targetedListTasks.splice(taskIndex, 0, currentTask);
+
+          updatedList[cardIndex] = {
+            ...updatedList[cardIndex],
+            tasks: currentListTasks
+          }
+
+          updatedList[targetedList] = {
+            ...updatedList[targetedList],
+            tasks: targetedListTasks
+          }
+        }
+
+        return updatedList;
+    })
+
+  }
+
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='container'>
+      {lists.map((list) => (
+        <Card key={list.id} cardIndex={list.id} owner={list.owner} tasks={list.tasks} addTask={addTask} taskUpdate={taskUpdate} />
+      ))}
+    </div>
   )
 }
 
