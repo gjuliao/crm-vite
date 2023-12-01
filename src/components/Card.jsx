@@ -1,32 +1,21 @@
-import React from 'react'
-import { Item } from './Item'
-import { FormInput } from './FormInput'
-import PropTypes from 'prop-types'
+import { FormInput } from "./FormInput"
+import { Item } from "./Item"
 
 
-export const Card = ({ owner, cardIndex, tasks, addTask, taskUpdate }) => {
+export const Card = ({cardIndex, owner, tasks, addTask, updateTask}) => {
   return (
-    <div className='card-group'>
+    <div className="card-group">
         <div className={`card-title-${cardIndex}`}>
             <h2>{owner}</h2>
         </div>
-
-        <ul className='list'>
-        {tasks.map((item, taskIndex) => (
-            <li key={taskIndex}>
-                <Item item={item} taskIndex={taskIndex} cardIndex={cardIndex} taskUpdate={taskUpdate}/>
-            </li>
-        ))}
+        <ul className="card-list">
+            {tasks.map((el, taskIndex) => (
+                <li key={taskIndex}>
+                    <Item taskIndex={taskIndex} cardIndex={cardIndex} item={el} updateTask={updateTask} />
+                </li>
+            ))}
         </ul>
         <FormInput cardIndex={cardIndex} owner={owner} addTask={addTask}/>
-  </div>
- )
+    </div>
+  )
 }
-
-Card.propTypes = {
-    owner: PropTypes.string,
-    cardIndex: PropTypes.integer,
-    tasks: PropTypes.array,
-    addTask: PropTypes.func,
-    taskUpdate: PropTypes.func,
-};
