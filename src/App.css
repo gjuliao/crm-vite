@@ -2,32 +2,33 @@
   display: flex;
   width: 80%;
   justify-content: space-between;
-  text-align: center;
+  flex-wrap: nowrap;
   margin: auto;
 }
 
 .card-group {
   flex: 1;
+  text-align: center;
   margin: 1%;
 }
 
 .card-title-0 {
   background-color: lightblue;
-  display: block;
-  width: 100%;
 }
 
 .card-title-1 {
+  background-color: lightcoral;
+}
+
+.card-title-2 {
   background-color: lightgray;
 }
-.card-title-2 {
-  background-color: lightgreen;
-}
+
 .card-title-3 {
   background-color: lightsalmon;
 }
 
-.list {
+.card-list {
   list-style: none;
   padding: 0;
 }
@@ -35,5 +36,4 @@
 .item {
   display: flex;
   justify-content: space-around;
-  align-items: center;
 }
