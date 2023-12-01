@@ -1,27 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { GrPrevious } from "react-icons/gr";
-import { GrNext } from "react-icons/gr";
 
-export const Item = ({item, taskIndex, cardIndex, taskUpdate}) => {
+export const Item = ({item, cardIndex, taskIndex, updateTask}) => {
 
     const handleClick = (e) => {
-        taskUpdate(taskIndex, cardIndex, e.target.id)
+        e.preventDefault();
+        const action = e.target.id;
+        updateTask(cardIndex, taskIndex, action)
     }
-
   return (
-    <div className='item'>
-        <GrPrevious onClick={handleClick} id="prev"/>
+    <div className="item">
+        <p onClick={handleClick} id='prev'>prev</p>
         <p>{item}</p>
-        <GrNext onClick={handleClick} id="next" />
+        <p onClick={handleClick} id='next'>next</p>
     </div>
   )
 }
-
-Item.propTypes = {
-    item: PropTypes.string,
-    cardIndex: PropTypes.integer,
-    taskIndex: PropTypes.integer,
-    taskUpdate: PropTypes.func,
-};
-
